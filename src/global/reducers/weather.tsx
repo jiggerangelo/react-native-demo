@@ -14,7 +14,7 @@ export interface ListState {
 
 const initialState: ListState = {
   weatherList: null,
-  loading: false,
+  loading: true,
   error: null,
 }
 
