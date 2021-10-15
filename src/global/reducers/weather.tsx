@@ -13,7 +13,7 @@ export interface ListState {
 }
 
 const initialState: ListState = {
-  weatherList: {},
+  weatherList: null,
   loading: false,
   error: null,
 }
