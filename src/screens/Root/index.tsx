@@ -1,40 +1,34 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { Image, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Image, Platform, StyleSheet } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import store from '../../global/store/store'
 
 import Home from '../Home/Home'
-import Detail from '../Home/Detail';
+import Detail from '../Home/Detail'
 
 export type RootStackParamList = {
   Home: undefined
-  Detail: { index: number}
+  Detail: { index?: number; current?: boolean } // See note in weather reducer
 }
 
-function HomeTitle(props: any) {
+const HomeTitle = () => {
   return (
     <>
-      <Image
-        style={{ width: 50, height: 50, resizeMode: 'contain' }}
-        source={require('assets/icons/ic_clear.png')}
-      />
-      <Image
-        style={{ width: 100, height: 50, resizeMode: 'contain' }}
-        source={require('assets/icons/ic_logo.png')}
-      />
+      <Image style={styles.logoImage} source={require('assets/icons/ic_clear.png')} />
+      <Image style={styles.logoText} source={require('assets/icons/ic_logo.png')} />
     </>
-  );
+  )
 }
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>()
 
 const Root = () => (
   <Provider store={store}>
     <NavigationContainer>
-      <Stack.Navigator 
+      <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{
           headerStyle: {
@@ -50,7 +44,7 @@ const Root = () => (
           name="Home"
           component={Home}
           options={{
-            headerTitle: (props) => <HomeTitle {...props} />,
+            headerTitle: (props: any) => <HomeTitle {...props} />,
           }}
         />
         <Stack.Screen
@@ -66,3 +60,16 @@ const Root = () => (
 )
 
 export default Root
+
+const styles = StyleSheet.create({
+  logoImage: {
+    width: Platform.OS === 'ios' ? 35 : 50,
+    height: Platform.OS === 'ios' ? 40 : 50,
+    resizeMode: 'contain',
+  },
+  logoText: {
+    width: Platform.OS === 'ios' ? 90 : 100,
+    height: Platform.OS === 'ios' ? 40 : 50,
+    resizeMode: 'contain',
+  },
+})

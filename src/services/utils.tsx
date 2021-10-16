@@ -1,8 +1,19 @@
-const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
+const monthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
 
-const weekNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const weekNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 export const getMonthName = (monthNumber: number) => {
   return monthNames[monthNumber]
@@ -12,7 +23,7 @@ export const getWeekName = (weekNumber: number) => {
   return weekNames[weekNumber]
 }
 
-export const FORECAST_ICON: {[index: string]: any } = {
+export const FORECAST_ICON: { [index: string]: any } = {
   Clear: require('assets/icons/ic_clear.png'),
   Clouds: require('assets/icons/ic_cloudy.png'),
   Fog: require('assets/icons/ic_fog.png'),
@@ -23,7 +34,24 @@ export const FORECAST_ICON: {[index: string]: any } = {
 }
 
 export const degToDirection = (deg: number) => {
-  const val = (deg/22.5) + 0.5
-  const directionArray = ["N","NNE","NE","ENE","E","ESE", "SE", "SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"]
-  return directionArray[(val % 16)]
+  const val = Math.round(deg / 22.5 + 0.5)
+  const directionArray = [
+    'N',
+    'NNE',
+    'NE',
+    'ENE',
+    'E',
+    'ESE',
+    'SE',
+    'SSE',
+    'S',
+    'SSW',
+    'SW',
+    'WSW',
+    'W',
+    'WNW',
+    'NW',
+    'NNW',
+  ]
+  return directionArray[((val % 16) + 16) % 16]
 }
