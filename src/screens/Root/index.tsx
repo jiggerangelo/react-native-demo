@@ -11,7 +11,7 @@ import Detail from '../Home/Detail';
 
 export type RootStackParamList = {
   Home: undefined
-  Detail: undefined
+  Detail: { index: number}
 }
 
 function HomeTitle(props: any) {

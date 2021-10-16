@@ -21,3 +21,9 @@ export const FORECAST_ICON: {[index: string]: any } = {
   Snow: require('assets/icons/ic_snow.png'),
   Thunderstorm: require('assets/icons/ic_storm.png'),
 }
+
+export const degToDirection = (deg: number) => {
+  const val = (deg/22.5) + 0.5
+  const directionArray = ["N","NNE","NE","ENE","E","ESE", "SE", "SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"]
+  return directionArray[(val % 16)]
+}

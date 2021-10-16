@@ -7,12 +7,14 @@ const part = 'minutely,hourly,alerts'
 const units = 'metric'
 
 export interface ListState {
-  weatherList: any
+  currentWeather: any
+  weatherList: any[] | null
   loading: boolean
   error: string | null
 }
 
 const initialState: ListState = {
+  currentWeather: null,
   weatherList: null,
   loading: true,
   error: null,
@@ -36,7 +38,8 @@ export const weatherSlice = createSlice({
       state.loading = true
     }),
     builder.addCase(fetchWeatherList.fulfilled, (state, action) => {
-      state.weatherList = action.payload
+      state.currentWeather = action.payload.current
+      state.weatherList = action.payload.daily
       state.loading = false
     }),
     builder.addCase(fetchWeatherList.rejected, (state, action) => {

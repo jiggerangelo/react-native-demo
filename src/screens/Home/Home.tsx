@@ -1,30 +1,26 @@
 import React, { useEffect } from 'react'
 import AppLoading from 'expo-app-loading';
 import { View, ScrollView, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../Root';
 import { fetchWeatherList } from '../../global/reducers/weather';
 import { useAppDispatch, useAppSelector } from '../../global/hooks/hooks';
 import MyAppText from '../../services/MyAppText'
 import { FORECAST_ICON, getMonthName, getWeekName } from '../../services/utils';
 
-type DevHomeNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 interface IProps {
-  navigation: DevHomeNavigationProp
+  navigation: Props['navigation']
 }
 
 const Home = ({ navigation }: IProps) => {
-  const { error, loading, weatherList } = useAppSelector((state) => state.weather)
+  const { error, loading, currentWeather, weatherList } = useAppSelector((state) => state.weather)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(fetchWeatherList())
   }, [dispatch, fetchWeatherList])
-
-  console.log(weatherList)
-  
-  let current = weatherList && weatherList.current && weatherList.current // Refactor reducer
 
   if (loading) {
     return <AppLoading />
@@ -46,28 +42,28 @@ const Home = ({ navigation }: IProps) => {
           <View style={styles.left}></View>
           <View style={styles.middle}>
             <MyAppText style={styles.currentDate}>
-              Today, {getMonthName(new Date(current.dt * 1000).getMonth())} {new Date(current.dt * 1000).getDate()}
+              Today, {getMonthName(new Date(currentWeather.dt * 1000).getMonth())} {new Date(currentWeather.dt * 1000).getDate()}
             </MyAppText>
           </View>
           <View style={styles.right}></View>
 
           <View style={styles.left}></View>
           <View style={styles.middle}>
-            <MyAppText style={styles.currentFeelsLike}>{Math.round(parseInt(current.feels_like))}&deg;</MyAppText>
-            <MyAppText style={styles.currentTemperature}>{Math.round(parseInt(current.temp))}&deg;</MyAppText>
+            <MyAppText style={styles.currentFeelsLike}>{Math.round(parseInt(currentWeather.feels_like))}&deg;</MyAppText>
+            <MyAppText style={styles.currentTemperature}>{Math.round(parseInt(currentWeather.temp))}&deg;</MyAppText>
           </View>
           <View style={styles.right}>
             <Image
               style={styles.currentTempImage}
-              source={FORECAST_ICON[current.weather[0].main]}
+              source={FORECAST_ICON[currentWeather.weather[0].main]}
             />
-            <MyAppText style={styles.currentForecast}>{current.weather[0].main}</MyAppText>
+            <MyAppText style={styles.currentForecast}>{currentWeather.weather[0].main}</MyAppText>
           </View>
         </View>
 
         {weatherList &&
-          weatherList.daily.map((item: any, index: number) => (
-            <TouchableOpacity key={index} onPress={() => navigation.navigate('Detail')} style={styles.row}>
+          weatherList.map((item: any, index: number) => (
+            <TouchableOpacity key={index} onPress={() => navigation.navigate('Detail', { index: index })} style={styles.row}>
               <View style={styles.left}>
                 <Image
                   style={styles.tempImage}
