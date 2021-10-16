@@ -78,7 +78,9 @@ const Home = ({ navigation }: IProps) => {
                     <Image style={styles.tempImage} source={FORECAST_ICON[item.weather[0].main]} />
                   </View>
                   <View style={styles.middle}>
-                    <MyAppText style={styles.rowText}>{getWeekName(new Date(item.dt * 1000).getDay())}</MyAppText>
+                    <MyAppText style={styles.rowText}>
+                      {index === 1 ? 'Tomorrow' : getWeekName(new Date(item.dt * 1000).getDay())}
+                    </MyAppText>
                     <MyAppText style={styles.rowSubtext}>{item.weather[0].main}</MyAppText>
                   </View>
                   <View style={styles.right}>
