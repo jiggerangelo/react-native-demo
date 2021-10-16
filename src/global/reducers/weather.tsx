@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-const API_KEY = '0b08f90f151899c4474014277b081899'
+const API_KEY = '0b08f90f151899c4474014277b081899' // Intentionally left here for easier cloning
 const lat = '12.8797'
 const lon = '121.7740'
 const part = 'minutely,hourly,alerts'
